@@ -1,14 +1,14 @@
-name: FarmingTycoon
-version: 1.1.0
-main: it.tristana.farmingtycoon.Main
-description: Tycoon with Minecraft crops
+name: GameOfLife
+version: 1.0.0
+main: it.tristana.gameoflife.Main
+description: Simple game of life
 author: Massimiliano Micol
-api-version: 1.19
+api-version: 1.20
 depend: [TristanaCommons, WorldEdit]
-softdepend: [FastAsyncWorldEdit, PlaceholderAPI]
+softdepend: [FastAsyncWorldEdit]
 commands:
-  farm:
+  gol:
     description: Main command
-    usage: Type /farm help
-    permission: farm.player
-    default: true
+    usage: Type /gol help
+    permission: gameoflife.admin
+    default: op

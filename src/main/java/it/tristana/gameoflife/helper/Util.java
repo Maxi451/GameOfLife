@@ -1,4 +1,4 @@
-package it.tristana.farmingtycoon;
+package it.tristana.gameoflife.helper;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
