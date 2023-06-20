@@ -42,11 +42,23 @@ public class GamesManager {
 			return false;
 		}
 
-		games.put(id.toLowerCase(), new GameBuilder(new GameOfLife(width, height), pos1vec.toLocation(pos1.getWorld()), direction));
+		games.put(parseId(id), new GameBuilder(new GameOfLife(width, height), pos1vec.toLocation(pos1.getWorld()), direction));
 		return true;
 	}
 
+	public Map<String, GameBuilder> getGames() {
+		return games;
+	}
+
+	public boolean deleteGame(String id) {
+		return games.remove(parseId(id)) != null;
+	}
+
 	public GameBuilder getGame(String id) {
-		return games.get(id);
+		return games.get(parseId(id));
+	}
+
+	private static String parseId(String id) {
+		return id.toLowerCase();
 	}
 }

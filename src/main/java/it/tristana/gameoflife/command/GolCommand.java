@@ -10,6 +10,7 @@ public class GolCommand extends MainCommand<Main> {
 		super(plugin, settings, command);
 		String adminPerms = getAdminPerms();
 		registerSubCommand(new CommandCreate(this, "create", adminPerms));
+		registerSubCommand(new CommandList(this, "list", adminPerms));
 		registerSubCommand(new CommandPause(this, "pause", adminPerms));
 	}
 	

@@ -28,8 +28,16 @@ public class GameBuilder implements Tickable {
 		direction.build(start, game.getMatrix());
 	}
 	
+	public Location getLocation() {
+		return start;
+	}
+	
 	public boolean togglePause() {
 		isPaused = !isPaused;
+		return isPaused;
+	}
+	
+	public boolean isPaused() {
 		return isPaused;
 	}
 }
