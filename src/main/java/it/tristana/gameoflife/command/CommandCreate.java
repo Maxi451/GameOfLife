@@ -1,6 +1,6 @@
 package it.tristana.gameoflife.command;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -70,7 +70,6 @@ public class CommandCreate extends GolSubCommand {
 
 		Block target = player.getTargetBlock(null, 5);
 		Location pos = target == null ? player.getLocation() : target.getLocation();
-		List<String> response = new ArrayList<>(1);
 		String value = switch (args.length) {
 		case 2: // x1
 		case 5: // x2
@@ -91,8 +90,7 @@ public class CommandCreate extends GolSubCommand {
 			return null;
 		}
 
-		response.add(value);
-		return response;
+		return Arrays.asList(value);
 	}
 
 	@Override

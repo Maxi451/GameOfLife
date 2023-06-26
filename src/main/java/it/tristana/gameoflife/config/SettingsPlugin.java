@@ -15,6 +15,9 @@ public class SettingsPlugin extends Settings<ConfigPlugin> {
 	private String commandPauseHelp;
 	private String commandPausePaused;
 	private String commandPauseResumed;
+	
+	private String commandDeleteHelp;
+	private String commandDeleteExecuted;
 
 	private String invalidWorld;
 	private String invalidNumber;
@@ -39,12 +42,23 @@ public class SettingsPlugin extends Settings<ConfigPlugin> {
 		commandPausePaused = config.getString(ConfigPlugin.COMMAND_PAUSE_PAUSED);
 		commandPauseResumed = config.getString(ConfigPlugin.COMMAND_PAUSE_RESUMED);
 		
+		commandDeleteHelp = config.getString(ConfigPlugin.COMMAND_DELETE_HELP);
+		commandDeleteExecuted = config.getString(ConfigPlugin.COMMAND_DELETE_EXECUTED);
+		
 		invalidWorld = config.getString(ConfigPlugin.INVALID_WORLD);
 		invalidNumber = config.getString(ConfigPlugin.INVALID_NUMBER);
 		invalidGame = config.getString(ConfigPlugin.INVALID_GAME);
 		gameAlreadyExists = config.getString(ConfigPlugin.GAME_ALREADY_EXISTS);
 		pausedWord = config.getString(ConfigPlugin.PAUSED_WORD);
 		runningWord = config.getString(ConfigPlugin.RUNNING_WORD);
+	}
+
+	public String getCommandDeleteHelp() {
+		return commandDeleteHelp;
+	}
+
+	public String getCommandDeleteExecuted() {
+		return commandDeleteExecuted;
 	}
 
 	public String getInvalidGame() {

@@ -5,6 +5,7 @@ import it.tristana.commons.interfaces.Tickable;
 public class GameOfLife implements Tickable {
 
 	private boolean[][] matrix;
+	private boolean[][] previousMatrix;
 
 	public GameOfLife(int width, int height) {
 		this.matrix = new boolean[width][height];
@@ -20,13 +21,18 @@ public class GameOfLife implements Tickable {
 				nextGen[i][ii] = neighbors == 2 || neighbors == 3;
 			}
 		}
-		this.matrix = nextGen;
+		previousMatrix = matrix;
+		matrix = nextGen;
 	}
 
 	public boolean[][] getMatrix() {
 		return matrix;
 	}
 
+	public boolean[][] getPreviousMatrix() {
+		return previousMatrix;
+	}
+	
 	private void randomizeField() {
 		for (int i = 0; i < matrix.length; i ++) {
 			for (int ii = 0; ii < matrix[i].length; ii ++) {

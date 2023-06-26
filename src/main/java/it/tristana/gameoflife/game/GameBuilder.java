@@ -25,7 +25,7 @@ public class GameBuilder implements Tickable {
 		}
 
 		game.runTick();
-		direction.build(start, game.getMatrix());
+		direction.build(start, game.getMatrix(), game.getPreviousMatrix());
 	}
 	
 	public Location getLocation() {
