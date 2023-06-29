@@ -35,6 +35,9 @@ public class ConfigPlugin extends Config {
 	public static final String GAME_ALREADY_EXISTS = "game-already-exists";
 	public static final String PAUSED_WORD = "paused-word";
 	public static final String RUNNING_WORD = "running-word";
+	
+	public static final String GAMES_TICK_INTERVAL = "games-tick-interval";
+	public static final String MAX_DISTANCE_TO_RUN = "max-distance-to-run";
 
 	public ConfigPlugin(File folder) {
 		super(new File(folder, FILE_NAME));
@@ -61,5 +64,8 @@ public class ConfigPlugin extends Config {
 		set(GAME_ALREADY_EXISTS, "&cA game with that name already exists!");
 		set(PAUSED_WORD, "&cpaused");
 		set(RUNNING_WORD, "&arunning");
+		
+		set(GAMES_TICK_INTERVAL, "20");
+		set(MAX_DISTANCE_TO_RUN, "64");
 	}
 }

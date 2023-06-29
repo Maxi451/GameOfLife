@@ -4,16 +4,35 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
+import it.tristana.commons.arena.Clock;
 import it.tristana.commons.helper.CommonsHelper;
+import it.tristana.commons.interfaces.Reloadable;
+import it.tristana.gameoflife.Main;
+import it.tristana.gameoflife.config.SettingsPlugin;
 
-public class GamesManager {
+public class GamesManager implements Reloadable {
 
+	private Main plugin;
+	private SettingsPlugin settings;
 	private Map<String, GameBuilder> games;
+	private Clock clock;
 
-	public GamesManager() {
+	public GamesManager(Main plugin, SettingsPlugin settings) {
+		this.plugin = plugin;
+		this.settings = settings;
 		this.games = new HashMap<>();
+		this.clock = new Clock();
+		this.clock.add(() -> games.values().stream().filter(this::hasPlayersNearby).forEach(GameBuilder::runTick));
+		reload();
+	}
+
+	@Override
+	public void reload() {
+		clock.cancel();
+		clock.schedule(plugin, settings.getGamesTickInterval());
 	}
 
 	public boolean create(String id, Location pos1, Location pos2) {
@@ -56,6 +75,18 @@ public class GamesManager {
 
 	public GameBuilder getGame(String id) {
 		return games.get(parseId(id));
+	}
+
+	private boolean hasPlayersNearby(GameBuilder game) {
+		Location pos = game.getLocation();
+		Iterable<Player> players = pos.getWorld().getPlayers();
+		for (Player player : players) {
+			if (player.getLocation().distanceSquared(pos) < Math.pow(settings.getMaxDistanceToRun(), 2)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private static String parseId(String id) {

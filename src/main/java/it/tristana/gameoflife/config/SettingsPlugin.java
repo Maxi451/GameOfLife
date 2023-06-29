@@ -3,6 +3,7 @@ package it.tristana.gameoflife.config;
 import java.io.File;
 
 import it.tristana.commons.config.Settings;
+import it.tristana.commons.helper.CommonsHelper;
 
 public class SettingsPlugin extends Settings<ConfigPlugin> {
 
@@ -25,6 +26,9 @@ public class SettingsPlugin extends Settings<ConfigPlugin> {
 	private String gameAlreadyExists;
 	private String pausedWord;
 	private String runningWord;
+	
+	private long gamesTickInterval;
+	private double maxDistanceToRun;
 
 	public SettingsPlugin(File folder) {
 		super(folder, ConfigPlugin.class);
@@ -51,6 +55,17 @@ public class SettingsPlugin extends Settings<ConfigPlugin> {
 		gameAlreadyExists = config.getString(ConfigPlugin.GAME_ALREADY_EXISTS);
 		pausedWord = config.getString(ConfigPlugin.PAUSED_WORD);
 		runningWord = config.getString(ConfigPlugin.RUNNING_WORD);
+		
+		gamesTickInterval = CommonsHelper.parseLongOrGetDefault(config.getString(ConfigPlugin.GAMES_TICK_INTERVAL), 20);
+		maxDistanceToRun = CommonsHelper.parseDoubleOrGetDefault(config.getString(ConfigPlugin.MAX_DISTANCE_TO_RUN), 64);
+	}
+	
+	public double getMaxDistanceToRun() {
+		return maxDistanceToRun;
+	}
+	
+	public long getGamesTickInterval() {
+		return gamesTickInterval;
 	}
 
 	public String getCommandDeleteHelp() {

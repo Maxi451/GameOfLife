@@ -25,15 +25,11 @@ public class Main extends PluginDraft implements Reloadable {
 		register(new BlockListener());
 		registerCommand(this, GolCommand.class, "gol", ConfigPlugin.FILE_NAME);
 	}
-	
-	@Override
-	public void onDisable() {
-		
-	}
 
 	@Override
 	public void reload() {
 		settings.reload();
+		gamesManager.reload();
 	}
 	
 	public SettingsPlugin getSettingsPlugin() {
@@ -49,6 +45,6 @@ public class Main extends PluginDraft implements Reloadable {
 	}
 	
 	private void loadManagers() {
-		gamesManager = new GamesManager();
+		gamesManager = new GamesManager(this, settings);
 	}
 }

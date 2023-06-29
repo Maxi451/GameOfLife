@@ -34,12 +34,7 @@ public class CommandCreate extends GolSubCommand {
 			return;
 		}
 
-		int x1;
-		int y1;
-		int z1;
-		int x2;
-		int y2;
-		int z2;
+		int x1, y1, z1, x2, y2, z2;
 		try {
 			x1 = Integer.parseInt(args[2]);
 			y1 = Integer.parseInt(args[3]);
