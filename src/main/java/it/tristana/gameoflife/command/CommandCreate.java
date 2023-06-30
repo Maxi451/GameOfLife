@@ -49,7 +49,7 @@ public class CommandCreate extends GolSubCommand {
 
 		CommonsHelper.info(
 				sender,
-				gamesManager.create(
+				gamesManager.addGame(
 						args[1],
 						new Location(world, x1, y1, z1),
 						new Location(world, x2, y2, z2))

@@ -8,13 +8,15 @@ public class GameBuilder implements Tickable {
 
 	private final GameOfLife game;
 	private final Location start;
+	private final Location end;
 	private final GameDirection direction;
 	
 	private boolean isPaused;
 
-	public GameBuilder(GameOfLife game, Location start, GameDirection direction) {
+	public GameBuilder(GameOfLife game, Location start, Location end, GameDirection direction) {
 		this.game = game;
 		this.start = start;
+		this.end = end;
 		this.direction = direction;
 	}
 
@@ -29,7 +31,11 @@ public class GameBuilder implements Tickable {
 	}
 	
 	public Location getLocation() {
-		return start;
+		return start.clone();
+	}
+	
+	public Location getEndLocation() {
+		return end.clone();
 	}
 	
 	public boolean togglePause() {

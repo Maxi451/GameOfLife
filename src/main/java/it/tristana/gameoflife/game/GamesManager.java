@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
@@ -35,7 +36,24 @@ public class GamesManager implements Reloadable {
 		clock.schedule(plugin, settings.getGamesTickInterval());
 	}
 
-	public boolean create(String id, Location pos1, Location pos2) {
+	public boolean addGame(String name, Location pos1, Location pos2) {
+		GameBuilder game = createGame(pos1, pos2);
+		if (game == null) {
+			return false;
+		}
+
+		return true;
+	}
+	
+	public void addGame(String name, GameBuilder game) {
+		games.put(parseName(name), game);
+	}
+
+	GameBuilder createGame(Location pos1, Location pos2) {
+		if (!CommonsHelper.sameWorld(pos1, pos2)) {
+			return null;
+		}
+
 		Vector pos1vec = pos1.toVector();
 		Vector pos2vec = pos2.toVector();
 		CommonsHelper.correctExtremities(pos1vec, pos2vec);
@@ -58,23 +76,23 @@ public class GamesManager implements Reloadable {
 			width = xDiff;
 			height = yDiff;
 		} else {
-			return false;
+			return null;
 		}
 
-		games.put(parseId(id), new GameBuilder(new GameOfLife(width, height), pos1vec.toLocation(pos1.getWorld()), direction));
-		return true;
+		World world = pos1.getWorld();
+		return new GameBuilder(new GameOfLife(width, height), pos1vec.toLocation(world), pos2vec.toLocation(world), direction);
 	}
 
 	public Map<String, GameBuilder> getGames() {
 		return games;
 	}
 
-	public boolean deleteGame(String id) {
-		return games.remove(parseId(id)) != null;
+	public boolean deleteGame(String name) {
+		return games.remove(parseName(name)) != null;
 	}
 
-	public GameBuilder getGame(String id) {
-		return games.get(parseId(id));
+	public GameBuilder getGame(String name) {
+		return games.get(parseName(name));
 	}
 
 	private boolean hasPlayersNearby(GameBuilder game) {
@@ -89,7 +107,7 @@ public class GamesManager implements Reloadable {
 		return false;
 	}
 
-	private static String parseId(String id) {
-		return id.toLowerCase();
+	private static String parseName(String name) {
+		return name.toLowerCase();
 	}
 }

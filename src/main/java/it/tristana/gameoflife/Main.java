@@ -8,6 +8,7 @@ import it.tristana.gameoflife.command.GolCommand;
 import it.tristana.gameoflife.config.ConfigPlugin;
 import it.tristana.gameoflife.config.SettingsPlugin;
 import it.tristana.gameoflife.game.GamesManager;
+import it.tristana.gameoflife.game.SavedGames;
 import it.tristana.gameoflife.listener.BlockListener;
 
 public class Main extends PluginDraft implements Reloadable {
@@ -16,6 +17,7 @@ public class Main extends PluginDraft implements Reloadable {
 	private SettingsPlugin settings;
 	
 	private GamesManager gamesManager;
+	private SavedGames savedGames;
 	
 	@Override
 	public void onEnable() {
@@ -24,6 +26,11 @@ public class Main extends PluginDraft implements Reloadable {
 		loadManagers();
 		register(new BlockListener());
 		registerCommand(this, GolCommand.class, "gol", ConfigPlugin.FILE_NAME);
+	}
+	
+	@Override
+	public void onDisable() {
+		savedGames.saveGames(gamesManager.getGames());
 	}
 
 	@Override
@@ -46,5 +53,7 @@ public class Main extends PluginDraft implements Reloadable {
 	
 	private void loadManagers() {
 		gamesManager = new GamesManager(this, settings);
+		savedGames = new SavedGames(folder, gamesManager);
+		savedGames.loadGames().forEach(gamesManager::addGame);
 	}
 }
